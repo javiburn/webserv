@@ -6,7 +6,7 @@
 /*   By: jsarabia <jsarabia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 19:22:53 by jsarabia          #+#    #+#             */
-/*   Updated: 2024/03/15 17:02:06 by jsarabia         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:35:29 by jsarabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void PostReq::setFileContent(std::string request)
 	this->content.push_back('\0');
 	unsigned int i = 0;
 	while (i < this->content.length()){
-		if (isspace(this->content[i]))
+		if (isspace(this->content[i]) || this->content[i] == '\0')
 			this->content = this->content.substr(1, this->content.length() - 1);
 		else
 			break;
 		i++;
 	}
-	while (isspace(this->content.back()))
+	while (isspace(this->content.back()) || this->content.back() == '\0')
 		this->content.pop_back();
 }
 

@@ -6,7 +6,7 @@
 /*   By: jsarabia <jsarabia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:42:26 by alaparic          #+#    #+#             */
-/*   Updated: 2024/03/15 17:25:44 by jsarabia         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:31:59 by jsarabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void handlingConnections(std::vector<Server> &servers, std::vector<Socket
 	bool end_server = false;
 	bool close_conn = false;
 	bool compress_array = false;
-	char buffer[1024];
+	char buffer[50];
 	std::vector<char> finalBuf;
 	int rc = 0;
 	int new_sd = 0;
@@ -90,8 +90,10 @@ static void handlingConnections(std::vector<Server> &servers, std::vector<Socket
 					perror("recv() failed");
 					close_conn = true;
 				}
-				for (unsigned int aux = 0; aux < sizeof((buffer)); aux++)
+				for (unsigned int aux = 0; aux < sizeof((buffer)); aux++){
+					cout << buffer[aux];
 					finalBuf.push_back(buffer[aux]);
+				}
 				if (rc == 0 || (static_cast<int>(bodyReq(vectorToString(finalBuf)).length()) >= parsedContentLength(vectorToString(finalBuf)) && parsedContentLength(vectorToString(finalBuf)) > 0) || (strncmp(vectorToString(finalBuf).substr(0, 4).c_str(), "POST", 4) && vectorToString(finalBuf).find("\r\n\r\n") < vectorToString(finalBuf).length() && vectorToString(finalBuf).find("\r\n\r\n") > 0))
 				{
 					client cl;
